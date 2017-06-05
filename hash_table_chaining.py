@@ -32,7 +32,6 @@ def rehash(table):
     for idx in range(len(table.lst)):
         new_lst[idx] = table.lst[idx]
     table.lst = [None]*(table.table_size*2)
-    table.collisions = 0
     table.items = 0
     table.table_size = table.table_size*2
     for idx in range(len(new_lst)):
@@ -55,6 +54,7 @@ def insert(table, key, value):
         linked = table.lst[index]
         for i in range(linked_list.length(linked)):
             if linked_list.get(linked, i)[0] == key:
+                table.collisions += 1
                 table.lst[index] = linked_list.set(linked, i, (key, value))
                 dup = True
         if dup == False:
@@ -94,7 +94,6 @@ def remove(table, key):
             if linked_list.get(linked, i)[0] == key:
                 val, table.lst[index] = linked_list.remove(table.lst[index], i)
                 table.items -= 1
-                table.collisions -= 1
                 removed = True
         if removed == False:
             raise LookupError

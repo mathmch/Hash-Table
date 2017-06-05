@@ -19,9 +19,9 @@ class Hash_Tests(unittest.TestCase):
         insert(my_table, 13, 8)
         self.assertEqual(my_table.lst[5], linked_list.Pair((13, 8), linked_list.Pair((5, 10), None)))
         self.assertEqual(my_table.items, 2)
-        self.assertEqual(my_table.collisions, 1)
-        insert(my_table, 21, 18)
         self.assertEqual(my_table.collisions, 2)
+        insert(my_table, 21, 18)
+        self.assertEqual(my_table.collisions, 3)
 
     def test_remove1(self):
         my_table = empty_hash_table()
@@ -55,6 +55,7 @@ class Hash_Tests(unittest.TestCase):
         self.assertEqual(collisions(my_table), 0)
         insert(my_table, 5, 10)
         insert(my_table, 13, 16)
+        remove(my_table, 13)
         self.assertEqual(collisions(my_table), 1)
 
 if __name__ == '__main__':
