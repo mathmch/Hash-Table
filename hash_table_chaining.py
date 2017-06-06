@@ -32,6 +32,7 @@ def rehash(table):
     for idx in range(len(table.lst)):
         new_lst[idx] = table.lst[idx]
     table.lst = [None]*(table.table_size*2)
+    table.collisions = 0
     table.items = 0
     table.table_size = table.table_size*2
     for idx in range(len(new_lst)):
