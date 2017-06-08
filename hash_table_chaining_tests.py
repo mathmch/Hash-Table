@@ -32,6 +32,7 @@ class Hash_Tests(unittest.TestCase):
         val1 = get(my_table, 2)
         self.assertEqual(val, 19)
         self.assertEqual(val1, 18)
+        self.assertRaises(LookupError, get, my_table, 5)
 
     def test_remove1(self):
         my_table = empty_hash_table()
