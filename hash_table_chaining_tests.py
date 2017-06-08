@@ -5,19 +5,18 @@ class Hash_Tests(unittest.TestCase):
 
     def test_table(self):
         my_table = empty_hash_table()
-        self.assertEqual(my_table, HashTable([None]*8, 0, 0))
+        self.assertEqual(my_table, HashTable([[]]*8, 0, 0))
         self.assertEqual(repr(my_table),
-                         'Table Size: 8, Num of Items: 0, Collisions: 0, Table: '
-                         '[None, None, None, None, None, None, None, None]')
+                         'Table Size: 8, Num of Items: 0, Collisions: 0, Table: [[], [], [], [], [], [], [], []]')
 
     def test_insert(self):
         my_table = empty_hash_table()
         insert(my_table, 5, 10)
         insert(my_table, 13, 16)
-        self.assertEqual(my_table.lst[5], linked_list.Pair((13, 16), linked_list.Pair((5, 10), None)))
+        self.assertEqual(my_table.lst[5], [(5, 10), (13, 16)])
         self.assertEqual(my_table.items, 2)
         insert(my_table, 13, 8)
-        self.assertEqual(my_table.lst[5], linked_list.Pair((13, 8), linked_list.Pair((5, 10), None)))
+        self.assertEqual(my_table.lst[5], [(5,10), (13, 8)])
         self.assertEqual(my_table.items, 2)
         self.assertEqual(my_table.collisions, 2)
         insert(my_table, 21, 18)
@@ -46,7 +45,7 @@ class Hash_Tests(unittest.TestCase):
         insert(my_table, 5, 10)
         insert(my_table, 13, 16)
         remove(my_table, 5)
-        self.assertEqual(my_table.lst[5], linked_list.Pair((13, 16), None))
+        self.assertEqual(my_table.lst[5], [(13, 16)])
         self.assertRaises(LookupError, remove, my_table, 5)
 
     def test_size(self):
@@ -72,7 +71,7 @@ class Hash_Tests(unittest.TestCase):
         self.assertEqual(collisions(my_table), 0)
         insert(my_table, 5, 10)
         insert(my_table, 13, 16)
-        remove(my_table, 13)
+        insert(my_table, 22, 16)
         self.assertEqual(collisions(my_table), 1)
 
 if __name__ == '__main__':

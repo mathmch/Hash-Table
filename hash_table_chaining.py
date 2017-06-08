@@ -22,24 +22,24 @@ class HashTable:
 # -> HashTable
 # Creates an empty HashTable
 def empty_hash_table():
-    empty_lst = [None] * 8
+    empty_lst = [[] for a in range(8)]
     return HashTable(empty_lst, 0, 0)
 
 # HashTable -> HashTable
 # Doubles the length of the table and rehashes every value
 def rehash(table):
-    new_lst = [None]*(table.table_size*2)
+    new_lst = [[] for a in range(table.table_size*2)]
     for idx in range(len(table.lst)):
         new_lst[idx] = table.lst[idx]
-    table.lst = [None]*(table.table_size*2)
+    table.lst = [[] for a in range(table.table_size*2)]
     table.collisions = 0
     table.items = 0
     table.table_size = table.table_size*2
     for idx in range(len(new_lst)):
-        if new_lst[idx] != None:
+        if new_lst[idx] != []:
             linked = new_lst[idx]
-            for i in range(linked_list.length(linked)):
-                pair = linked_list.get(linked, i)
+            for i in range(len(linked)):
+                pair = linked[i]
                 insert(table, pair[0], pair[1])
     return table
 
@@ -47,21 +47,21 @@ def rehash(table):
 # Inserts a value into the hash table based on its key
 def insert(table, key, value):
     index = hash(key)%table.table_size
-    if table.lst[index] is None:
-        table.lst[index] = linked_list.add(table.lst[index], 0, (key, value))
+    if table.lst[index] == []:
+        table.lst[index].append((key, value))
         table.items += 1
     else:
         dup = False
         linked = table.lst[index]
-        for i in range(linked_list.length(linked)):
-            if linked_list.get(linked, i)[0] == key:
+        for i in range(len(linked)):
+            if linked[i][0] == key:
                 table.collisions += 1
-                table.lst[index] = linked_list.set(linked, i, (key, value))
+                table.lst[index][i] = (key, value)
                 dup = True
                 break
         if dup == False:
             table.collisions += 1
-            table.lst[index] = linked_list.add(linked, 0, (key, value))
+            table.lst[index].append((key, value))
             table.items += 1
     if (table.items/ table.table_size) > 1.5:
         rehash(table)
@@ -71,26 +71,26 @@ def insert(table, key, value):
 # Takes a HashTable and returns the value at the given key, raise error if key is not in the table
 def get(table, key):
     index = hash(key) % table.table_size
-    if table.lst[index] is None:
+    if table.lst[index] == []:
         raise LookupError
     else:
         linked = table.lst[index]
-        for i in range(linked_list.length(table.lst[index])):
-            if linked_list.get(linked, i)[0] == key:
-                return linked_list.get(linked, i)[1]
+        for i in range(len(linked)):
+            if linked[i][0] == key:
+                return linked[i][1]
     raise LookupError
 
 # HashTable value -> HashTable
 # removes the value associated with the key, raises error if no key exists in table
 def remove(table, key):
     index = hash(key) % table.table_size
-    if table.lst[index] is None:
+    if table.lst[index] == []:
         raise LookupError
     else:
         linked = table.lst[index]
-        for i in range(linked_list.length(linked)):
-            if linked_list.get(linked, i)[0] == key:
-                val, table.lst[index] = linked_list.remove(table.lst[index], i)
+        for i in range(len(linked)):
+            if linked[i][0] == key:
+                table.lst[index].remove(linked[i])
                 table.items -= 1
                 return table
         raise LookupError
