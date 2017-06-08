@@ -1,4 +1,3 @@
-import linked_list
 
 # a HashTable is a array list and a number of elements in the table
 class HashTable:
