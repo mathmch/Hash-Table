@@ -28,8 +28,7 @@ def empty_hash_table():
 # Doubles the length of the table and rehashes every value
 def rehash(table):
     new_lst = [[] for a in range(table.table_size*2)]
-    for idx in range(len(table.lst)):
-        new_lst[idx] = table.lst[idx]
+    new_lst[0:table.table_size] = table.lst
     table.lst = [[] for a in range(table.table_size*2)]
     table.collisions = 0
     table.items = 0
