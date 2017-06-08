@@ -44,7 +44,7 @@ def rehash(table):
     return table
 
 # HashTable value value -> HashTable
-#
+# Inserts a value into the hash table based on its key
 def insert(table, key, value):
     index = hash(key)%table.table_size
     if table.lst[index] is None:
