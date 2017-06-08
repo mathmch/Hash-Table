@@ -76,7 +76,7 @@ def get(table, key):
         linked = table.lst[index]
         for i in range(linked_list.length(table.lst[index])):
             if linked_list.get(linked, i)[0] == key:
-                return linked_list.get(linked, i)
+                return linked_list.get(linked, i)[1]
     raise LookupError
 
 # HashTable value -> HashTable

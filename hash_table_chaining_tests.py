@@ -23,6 +23,16 @@ class Hash_Tests(unittest.TestCase):
         insert(my_table, 21, 18)
         self.assertEqual(my_table.collisions, 3)
 
+    def test_get(self):
+        my_table = empty_hash_table()
+        self.assertRaises(LookupError, get, my_table, 5)
+        insert(my_table, 2, 18)
+        insert(my_table, 10, 19)
+        val = get(my_table, 10)
+        val1 = get(my_table, 2)
+        self.assertEqual(val, 19)
+        self.assertEqual(val1, 18)
+
     def test_remove1(self):
         my_table = empty_hash_table()
         self.assertRaises(LookupError, remove, my_table, 4)
