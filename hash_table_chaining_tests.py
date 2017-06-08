@@ -23,6 +23,12 @@ class Hash_Tests(unittest.TestCase):
         insert(my_table, 21, 18)
         self.assertEqual(my_table.collisions, 3)
 
+    def test_big_insert(self):
+        my_table = empty_hash_table()
+        for i in range(100):
+            insert(my_table, i, 2 * i)
+        self.assertEqual(my_table.table_size, 128)
+
     def test_get(self):
         my_table = empty_hash_table()
         self.assertRaises(LookupError, get, my_table, 5)

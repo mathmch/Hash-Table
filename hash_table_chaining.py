@@ -58,6 +58,7 @@ def insert(table, key, value):
                 table.collisions += 1
                 table.lst[index] = linked_list.set(linked, i, (key, value))
                 dup = True
+                break
         if dup == False:
             table.collisions += 1
             table.lst[index] = linked_list.add(linked, 0, (key, value))
@@ -85,20 +86,14 @@ def remove(table, key):
     index = hash(key) % table.table_size
     if table.lst[index] is None:
         raise LookupError
-    elif table.lst[index].first[0] == key:
-        val, table.lst[index] = linked_list.remove(table.lst[index], 0)
-        table.items -= 1
     else:
         linked = table.lst[index]
-        removed = False
         for i in range(linked_list.length(linked)):
             if linked_list.get(linked, i)[0] == key:
                 val, table.lst[index] = linked_list.remove(table.lst[index], i)
                 table.items -= 1
-                removed = True
-        if removed == False:
-            raise LookupError
-    return table
+                return table
+        raise LookupError
 
 # HashTable -> Int
 # Returns the number of items in the table
