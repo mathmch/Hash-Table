@@ -27,13 +27,14 @@ def empty_hash_table():
 # HashTable -> HashTable
 # Doubles the length of the table and rehashes every value
 def rehash(table):
+    old_len = table.table_size
     new_lst = [[] for a in range(table.table_size*2)]
     new_lst[0:table.table_size] = table.lst
     table.lst = [[] for a in range(table.table_size*2)]
     table.collisions = 0
     table.items = 0
     table.table_size = table.table_size*2
-    for idx in range(len(new_lst)):
+    for idx in range(old_len):
         if new_lst[idx] != []:
             linked = new_lst[idx]
             for i in range(len(linked)):
